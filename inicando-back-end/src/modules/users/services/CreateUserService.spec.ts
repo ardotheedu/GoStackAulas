@@ -1,28 +1,32 @@
-import AppError from '@shared/errors/AppError'
-import FakeUsersRepository from '../repositories/fakes/FakesUsersRepository'
-import CreateUserService from './CreateUserService'
-import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider'
-
+import AppError from '@shared/errors/AppError';
+import FakeUsersRepository from '../repositories/fakes/FakesUsersRepository';
+import CreateUserService from './CreateUserService';
+import FakeHashProvider from '../providers/HashProvider/fakes/FakeHashProvider';
 
 describe('CreateUser', () => {
   it('should be able to create a new user', async () => {
     const fakeUsersRepository = new FakeUsersRepository();
     const fakeHashProvider = new FakeHashProvider();
-    const createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider)
+    const createUser = new CreateUserService(
+      fakeUsersRepository,
+      fakeHashProvider,
+    );
 
     const user = await createUser.execute({
       name: 'John Cena',
       email: 'johnwwe@example.com',
-      password: '1234567'
-    })
+      password: '1234567',
+    });
 
-    expect(user).toHaveProperty('id')
-
-  })
+    expect(user).toHaveProperty('id');
+  });
   it('should not be able to create a new user with repeated email', async () => {
     const fakeUsersRepository = new FakeUsersRepository();
     const fakeHashProvider = new FakeHashProvider();
-    const createUser = new CreateUserService(fakeUsersRepository, fakeHashProvider);
+    const createUser = new CreateUserService(
+      fakeUsersRepository,
+      fakeHashProvider,
+    );
 
     await createUser.execute({
       name: 'John Doe',
@@ -38,4 +42,4 @@ describe('CreateUser', () => {
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
-})
+});
