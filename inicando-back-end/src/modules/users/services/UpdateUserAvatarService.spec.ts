@@ -7,7 +7,7 @@ let fakeUsersRepository: FakeUsersRepository;
 let fakeStorageProvider: FakeStorageProvider;
 let updateUserAvatar: UpdateUserAvatarService;
 describe('UpdateUserAvatar', () => {
-  it('should be able to create a new user', async () => {
+  beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository();
     fakeStorageProvider = new FakeStorageProvider();
 
@@ -15,7 +15,8 @@ describe('UpdateUserAvatar', () => {
       fakeUsersRepository,
       fakeStorageProvider,
     );
-
+  });
+  it('should be able to create a new user', async () => {
     const user = await fakeUsersRepository.create({
       name: 'John Cena',
       email: 'johnwwe@example.com',
