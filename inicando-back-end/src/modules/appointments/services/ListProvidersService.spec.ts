@@ -10,7 +10,7 @@ describe('UpdateProfile', () => {
 
     listProviders = new ListProvidersService(fakeUsersRepository);
   });
-  it('should be able to update the profile', async () => {
+  it('should be able to list providers', async () => {
     const user1 = await fakeUsersRepository.create({
       name: 'John Cena',
       email: 'johnwwe@example.com',
