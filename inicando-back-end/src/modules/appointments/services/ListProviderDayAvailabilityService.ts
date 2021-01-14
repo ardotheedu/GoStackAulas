@@ -24,16 +24,16 @@ class ListProviderDayAvailabilityService {
 
   public async execute({
     provider_id,
-    day,
-    month,
     year,
+    month,
+    day,
   }: IRequest): Promise<IResponse> {
     const appointments = await this.appointmentsRepository.findAllInDayFromProvider(
       {
         provider_id,
-        day,
-        month,
         year,
+        month,
+        day,
       },
     );
 
@@ -50,9 +50,9 @@ class ListProviderDayAvailabilityService {
       const hasAppointmentInHour = appointments.find(
         appointment => getHours(appointment.date) === hour,
       );
+
       const compareDate = new Date(year, month - 1, day, hour);
-      // Esse compareDate vai ser criando em todas as horas do array das 8 as 17
-      // E vamos verificar se horario do array é depois do horario que estamos
+
       return {
         hour,
         available: !hasAppointmentInHour && isAfter(compareDate, currentDate),

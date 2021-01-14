@@ -1,11 +1,13 @@
 import { getRepository, Repository, Raw } from 'typeorm';
-import IAppointmentRepository from '@modules/appointments/repositories/iAppointmentsRepository';
+
+import IAppointmentsRepository from '@modules/appointments/repositories/iAppointmentsRepository';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/iCreateAppointmentDTO';
+
 import IFindAllInMonthFromProviderDTO from '@modules/appointments/dtos/IFindAllInMonthFromProviderDTO';
 import IFindAllInDayFromProviderDTO from '@modules/appointments/dtos/IFindAllInDayFromProviderDTO';
 import Appointment from '../entities/Appointments';
 
-class AppointmentsRepository implements IAppointmentRepository {
+class AppointmentsRepository implements IAppointmentsRepository {
   private ormRepository: Repository<Appointment>;
 
   constructor() {
@@ -13,11 +15,11 @@ class AppointmentsRepository implements IAppointmentRepository {
   }
 
   public async findByDate(date: Date): Promise<Appointment | undefined> {
-    // -> não tiver um retorno essa parte depois do 2 pontos da erro
     const findAppointment = await this.ormRepository.findOne({
-      where: { date }, // -> date(que recebe): date(do appointment banco de dados)
+      where: { date },
     });
-    return findAppointment; // -> Se encontrar retorne, se não retorne nulo
+
+    return findAppointment;
   }
 
   public async findAllInMonthFromProvider({
@@ -25,7 +27,6 @@ class AppointmentsRepository implements IAppointmentRepository {
     month,
     year,
   }: IFindAllInMonthFromProviderDTO): Promise<Appointment[]> {
-    // -> não tiver um retorno essa parte depois do 2 pontos da erro
     const parsedMonth = String(month).padStart(2, '0');
 
     const appointments = await this.ormRepository.find({
