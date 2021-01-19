@@ -1,14 +1,21 @@
-import AppError from '@shared/errors/AppError';
+import FakeCacheProvider from '@shared/container/providers/CacheProvider/fakes/FakeCacheProvider';
+
 import FakeUsersRepository from '@modules/users/repositories/fakes/FakesUsersRepository';
 import ListProvidersService from './ListProvidersService';
 
 let fakeUsersRepository: FakeUsersRepository;
 let listProviders: ListProvidersService;
+let fakeCacheProvider: FakeCacheProvider;
+
 describe('UpdateProfile', () => {
   beforeEach(() => {
     fakeUsersRepository = new FakeUsersRepository();
+    fakeCacheProvider = new FakeCacheProvider();
 
-    listProviders = new ListProvidersService(fakeUsersRepository);
+    listProviders = new ListProvidersService(
+      fakeUsersRepository,
+      fakeCacheProvider,
+    );
   });
   it('should be able to list providers', async () => {
     const user1 = await fakeUsersRepository.create({
@@ -18,20 +25,20 @@ describe('UpdateProfile', () => {
     });
 
     const user2 = await fakeUsersRepository.create({
-        name: 'John Cena',
-        email: 'johndoe@example.com',
-        password: '1234567',
+      name: 'John Cena',
+      email: 'johndoe@example.com',
+      password: '1234567',
     });
 
     const loggedUser = await fakeUsersRepository.create({
-        name: 'John Trê',
-        email: 'johntre@example.com',
-        password: '1234567',
-      });
+      name: 'John Trê',
+      email: 'johntre@example.com',
+      password: '1234567',
+    });
 
     const providers = await listProviders.execute({
       user_id: loggedUser.id,
     });
-    expect(providers).toEqual([user1, user2])
+    expect(providers).toEqual([user1, user2]);
   });
 });
