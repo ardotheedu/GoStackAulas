@@ -51,18 +51,14 @@ export const Container = styled.div<ContainerProps>`
 `;
 
 export const Error = styled(Tooltip)`
-  /* Vai estilizar o Tooltip (que é uma div) */
   height: 20px;
   margin-left: 16px;
-
   svg {
     margin: 0;
   }
-
   span {
     background: #c53030;
     color: #fff;
-
     &::before {
       border-color: #c53030 transparent;
     }

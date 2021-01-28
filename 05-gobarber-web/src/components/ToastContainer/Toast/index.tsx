@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-
 import {
   FiAlertCircle,
   FiCheckCircle,
@@ -14,10 +13,11 @@ interface ToastProps {
   message: ToastMessage;
   style: object;
 }
+
 const icons = {
   info: <FiInfo size={24} />,
-  error: <FiAlertCircle size={24} />,
   success: <FiCheckCircle size={24} />,
+  error: <FiAlertCircle size={24} />,
 };
 
 const Toast: React.FC<ToastProps> = ({ message, style }) => {
@@ -30,11 +30,9 @@ const Toast: React.FC<ToastProps> = ({ message, style }) => {
 
     return () => {
       clearTimeout(timer);
-      // Se o elemento foi excluido pelo o usuario essa função
-      // Vai esse return vai ser executado e timer não vai ser executado e tentar
-      // excluir o toast de novo
     };
   }, [removeToast, message.id]);
+
   return (
     <Container
       type={message.type}
@@ -42,13 +40,12 @@ const Toast: React.FC<ToastProps> = ({ message, style }) => {
       style={style}
     >
       {icons[message.type || 'info']}
-
       <div>
         <strong>{message.title}</strong>
         {message.description && <p>{message.description}</p>}
       </div>
 
-      <button onClick={() => removeToast(message.id)} type="button">
+      <button type="button" onClick={() => removeToast(message.id)}>
         <FiXCircle size={18} />
       </button>
     </Container>
@@ -56,3 +53,6 @@ const Toast: React.FC<ToastProps> = ({ message, style }) => {
 };
 
 export default Toast;
+// Se o elemento foi excluido pelo o usuario essa função
+// Vai esse return vai ser executado e timer não vai ser executado e tentar
+// excluir o toast de novo

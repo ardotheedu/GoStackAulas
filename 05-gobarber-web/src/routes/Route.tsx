@@ -37,4 +37,5 @@ const Route: React.FC<RouteProps> = ({
     />
   );
 };
+
 export default Route;
