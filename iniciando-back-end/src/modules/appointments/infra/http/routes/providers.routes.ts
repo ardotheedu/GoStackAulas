@@ -21,7 +21,7 @@ providersRouter.get(
   celebrate({
     [Segments.PARAMS]: {
       provider_id: Joi.string().uuid().required(),
-    }
+    },
   }),
   providerMonthAvailabilityController.index,
 );
@@ -30,7 +30,7 @@ providersRouter.get(
   celebrate({
     [Segments.PARAMS]: {
       provider_id: Joi.string().uuid().required(),
-    }
+    },
   }),
   providerDayAvailabilityController.index,
 );
